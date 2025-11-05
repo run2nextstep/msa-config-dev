@@ -1,3 +1,16 @@
-a:
-  b:
-    c: my-value-for-c
+server:
+  shutdown: graceful
+
+eureka:
+  instance:
+    # random port 사용시 eureka server에 인스턴스가 각각 표시되지 않는다
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    # 서비스간 통신 시 hostname 보다 ip 를 우선
+    preferIpAddress: true
+  client:
+    # eureka 서버에 등록
+    register-with-eureka: true
+    # 외부 검색 가능
+    fetch-registry: true
+    service-url:
+      defaultZone: http://${eureka.instance.hostname:localhost}:8761/eureka
